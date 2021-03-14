@@ -47,7 +47,7 @@ import System.Process
 matches :: [String] -> String -> Bool
 matches l s = any ((`isInfixOf` map toLower s) . map toLower) l
 
-
+-- random comment
 myTerminal = "alacritty"
 
 myModMask = mod4Mask
@@ -89,7 +89,7 @@ myStartupHook = do
 -- To match on the WM_NAME, you can use 'title' in the same way that
 -- 'className' and 'resource' are used below.
 --
-myManageHook = 
+myManageHook =
       manageSpawn
   <+> composeAll
     [
@@ -104,7 +104,7 @@ myManageHook =
 
 
 scratchpads :: NamedScratchpads
-scratchpads = 
+scratchpads =
   [ NS { name  = "audio"
        , cmd   = "pavucontrol"
        , query = className  =?. "Pavucontrol"
@@ -143,15 +143,15 @@ decoTheme = def {         activeColor = "#1b1d24"
 
 
 
-myLayout = 
+myLayout =
         mySpacing
          $ mkToggle (NOBORDERS ?? EOT)
          $ mkToggle (REFLECTX  ?? EOT)
-         $ windowNavigation 
-         $ boringWindows 
+         $ windowNavigation
+         $ boringWindows
         --  $ subLayout [0] (tabbed shrinkText decoTheme)
-         $  tiled 
-      --  ||| Full 
+         $  tiled
+      --  ||| Full
        ||| tabbed shrinkText decoTheme
 
     where
@@ -189,7 +189,7 @@ main = xmonad
 
 customLogHook :: X ()
 -- filter out NSP workspace that is used to hide scratchpads
-customLogHook = ewmhDesktopsLogHookCustom (filter ((/= "NSP") . W.tag)) 
+customLogHook = ewmhDesktopsLogHookCustom (filter ((/= "NSP") . W.tag))
 
 
 ------------------------------------------------------------------------
@@ -294,9 +294,9 @@ myKeys conf@XConfig {XMonad.modMask = modm} = M.fromList $
     [((m .|. modm, key), screenWorkspace sc >>= flip whenJust (windows . f))
         | (key, sc) <- zip [xK_q, xK_e, xK_w] [0..]
         , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]]
-    where 
+    where
       rofi :: String -> String
-      rofi show = "rofi -show " ++ show ++ " -theme \"/home/hannah/.config/rofi/launcher/style\""  
+      rofi show = "rofi -show " ++ show ++ " -theme \"/home/hannah/.config/rofi/launcher/style\""
 
       snip = spawn "import png:- | xclip -selection c -t image/png -i"
 
