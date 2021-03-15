@@ -256,6 +256,8 @@ myKeys conf@XConfig {XMonad.modMask = modm} = M.fromList $
     , ((0, xF86XK_AudioPlay          ), spawn "playerctl -p playerctld play-pause")
     , ((0, xF86XK_AudioPrev          ), spawn "playerctl -p playerctld previous")
     , ((0, xF86XK_AudioNext          ), spawn "playerctl -p playerctld next")
+    , ((0, xF86XK_MonBrightnessUp    ), spawn "xbacklight -inc 20")
+    , ((0, xF86XK_MonBrightnessDown  ), spawn "xbacklight -dec 20")
 
     -- scratchpads
     , ((modm              , xK_v     ), namedScratchpadAction scratchpads  "audio")
