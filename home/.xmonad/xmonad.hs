@@ -63,8 +63,8 @@ myStartupHook = do
     spawnOnce "xsetroot -cursor_name left_ptr"
     spawnOnce "feh --bg-center -g +-140--500 ~/.wallpapers/1.jpg"
     spawnOnce "picom -f"
-    spawnOnce "tint2 -c ~/.config/tint2/clock.tint2rc"
-    spawnOnce "tint2 -c ~/.config/tint2/workspaces.tint2rc"
+--    spawnOnce "tint2 -c ~/.config/tint2/clock.tint2rc"
+--    spawnOnce "tint2 -c ~/.config/tint2/workspaces.tint2rc"
     spawnOnce "dropbox"
 
 
