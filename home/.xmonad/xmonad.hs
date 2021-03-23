@@ -69,7 +69,7 @@ myStartupHook = do
 
 
     spawn "pulseaudio --start" -- @TODO comment out
-    spawnOn "1" "discord"
+    spawnOn "6" "discord"
     spawnOn "6" "/opt/Element/element-desktop"
     spawnOn "6" "/opt/Signal/signal-desktop"
     spawnOn "6" "app-launch WhatsApp"
@@ -97,7 +97,7 @@ myManageHook =
     -- , className =? "Pavucontrol"        --> customFloating (W.RationalRect 0.2 0.05 0.6 0.4)
     , resource  =?. "desktop_window"      --> doIgnore
     , className =?. "platform-Emulicious" --> doFloat
-    , className =?. "discord"             --> doShift "1"
+    , className =?. "discord"             --> doShift "6"
     , title     =?. "Application Finder"  --> placeHook (smart (0.5, 0.5)) <+> doFloat
     , namedScratchpadManageHook scratchpads
     ]
