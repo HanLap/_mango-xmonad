@@ -62,6 +62,7 @@ myStartupHook = do
     spawnOnce "redshift -O 4000k"
     spawnOnce "xsetroot -cursor_name left_ptr"
     spawnOnce "feh --bg-center -g +-140--500 ~/.wallpapers/1.jpg"
+    spawnOnce "~/.wallpapers/setup.sh"
     spawnOnce "picom -f"
 --    spawnOnce "tint2 -c ~/.config/tint2/clock.tint2rc"
 --    spawnOnce "tint2 -c ~/.config/tint2/workspaces.tint2rc"
