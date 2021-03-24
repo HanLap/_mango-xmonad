@@ -61,7 +61,8 @@ myWorkspaces = ["1", "2", "3", "4", "5", "6"]
 myStartupHook = do
     spawnOnce "redshift -O 4000k"
     spawnOnce "xsetroot -cursor_name left_ptr"
-    spawnOnce "feh --bg-center -g +-140--500 ~/.wallpapers/1.jpg"
+--    spawnOnce "feh --bg-center -g +-140--500 ~/.wallpapers/1.jpg"
+    spawnOnce "~/.config/polybar/launch.sh"
     spawnOnce "~/.wallpapers/setup.sh"
     spawnOnce "picom -f"
 --    spawnOnce "tint2 -c ~/.config/tint2/clock.tint2rc"
