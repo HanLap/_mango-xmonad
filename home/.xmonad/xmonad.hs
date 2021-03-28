@@ -53,8 +53,8 @@ myTerminal = "alacritty"
 myModMask = mod4Mask
 
 myBorderWith = 1
-myFocusedBorderColor = "#89ddff"
-myNormalBorderColor = "#1b1d24"
+myFocusedBorderColor = "#<#{PRIMARY}#>"
+myNormalBorderColor = "#<#{BACKGROUND_ALT}#>"
 
 myWorkspaces = ["1", "2", "3", "4", "5", "6"]
 
@@ -131,15 +131,15 @@ mySpacing = spacingRaw False
                        (Border  3  3  3  3) True
 
 decoTheme :: Theme
-decoTheme = def {         activeColor = "#1b1d24"
-                ,       inactiveColor = "#1b1d24"
-                ,         urgentColor = "#1b1d24"
-                ,   activeBorderColor = "#1b1d24"
-                , inactiveBorderColor = "#1b1d24"
-                ,   urgentBorderColor = "#89ddff"
-                ,     activeTextColor = "#89ddff"
-                ,   inactiveTextColor = "#666666"
-                ,     urgentTextColor = "#89ddff"
+decoTheme = def {         activeColor = "#<#{BACKGROUND_ALT}#>"
+                ,       inactiveColor = "#<#{BACKGROUND}#>"
+                ,         urgentColor = "#<#{BACKGROUND}#>"
+                ,   activeBorderColor = "#<#{BACKGROUND}#>"
+                , inactiveBorderColor = "#<#{BACKGROUND}#>"
+                ,   urgentBorderColor = "#<#{PRIMARY}#>"
+                ,     activeTextColor = "#<#{PRIMARY}#>"
+                ,   inactiveTextColor = "#<#{FOREGROUND_ALT}#>"
+                ,     urgentTextColor = "#<#{PRIMARY}#>"
                 ,            fontName = "xft:terminus:size=12"
                 }
 
