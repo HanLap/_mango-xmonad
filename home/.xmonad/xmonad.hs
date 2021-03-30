@@ -52,7 +52,7 @@ myTerminal = "alacritty"
 
 myModMask = mod4Mask
 
-myBorderWith = 1
+myBorderWith = 3
 myFocusedBorderColor = "#<#{PRIMARY}#>"
 myNormalBorderColor = "#<#{BACKGROUND_ALT}#>"
 
@@ -61,7 +61,6 @@ myWorkspaces = ["1", "2", "3", "4", "5", "6"]
 myStartupHook = do
     spawnOnce "redshift -O 4000k"
     spawnOnce "xsetroot -cursor_name left_ptr"
---    spawnOnce "feh --bg-center -g +-140--500 ~/.wallpapers/1.jpg"
     spawnOnce "~/.config/polybar/launch.sh"
     spawn "~/.wallpapers/setup.sh"
     spawnOnce "picom -f"
