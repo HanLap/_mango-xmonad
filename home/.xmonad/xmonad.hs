@@ -27,6 +27,7 @@ import XMonad.Layout.SubLayouts
 import XMonad.Layout.BoringWindows
 import XMonad.Actions.SpawnOn
 import System.Process
+import XMonad.Layout.IndependentScreens
 
 
 
