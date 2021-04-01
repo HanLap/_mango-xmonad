@@ -48,7 +48,6 @@ import XMonad.Layout.IndependentScreens
 matches :: [String] -> String -> Bool
 matches l s = any ((`isInfixOf` map toLower s) . map toLower) l
 
--- random comment
 myTerminal = "alacritty"
 
 myModMask = mod4Mask
