@@ -75,6 +75,8 @@ myStartupHook = do
     spawnOn "6" "/opt/Signal/signal-desktop"
     spawnOn "6" "app-launch WhatsApp"
 
+    spawn "timeout 0.5 xsettingsd || true"
+
 ------------------------------------------------------------------------
 -- Window rules:
 
