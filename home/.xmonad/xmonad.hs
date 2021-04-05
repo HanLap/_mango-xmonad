@@ -72,7 +72,7 @@ myStartupHook = do
     spawn "pulseaudio --start" -- @TODO comment out
     spawnOn "6" "discord"
     spawnOn "6" "/opt/Element/element-desktop"
-    spawnOn "6" "/opt/Signal/signal-desktop"
+    spawnOn "6" "killall signal-desktop; /opt/Signal/signal-desktop"
     spawnOn "6" "app-launch WhatsApp"
 
     spawn "timeout 0.5 xsettingsd || true"
