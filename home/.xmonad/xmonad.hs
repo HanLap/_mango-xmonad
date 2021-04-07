@@ -104,7 +104,7 @@ myManageHook =
     , className =?. "discord"             --> doShift "6"
     , className =?. "spotify"             --> doShift "5"
     , title     =?. "Application Finder"  --> placeHook (smart (0.5, 0.5)) <+> doFloat
-    , title     =?. "Unlock Keyring"      --> placeHook (smart (0.5, 0.5)) <+> doFloat
+    , className =?. "gcr-prompter"        --> doCenterFloat
     , namedScratchpadManageHook scratchpads
     ]
 
