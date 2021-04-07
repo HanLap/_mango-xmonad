@@ -102,6 +102,7 @@ myManageHook =
     , resource  =?. "desktop_window"      --> doIgnore
     , className =?. "platform-Emulicious" --> doFloat
     , className =?. "discord"             --> doShift "6"
+    , className =?. "spotify"             --> doShift "5"
     , title     =?. "Application Finder"  --> placeHook (smart (0.5, 0.5)) <+> doFloat
     , title     =?. "Unlock Keyring"      --> placeHook (smart (0.5, 0.5)) <+> doFloat
     , namedScratchpadManageHook scratchpads
@@ -140,8 +141,8 @@ offenders =
     , className =?. "mutt"
     , className =?. "kitty"
     , className =?. "discord"
-    , className =?. "wineboot.exe"
     , className =?. "signal"
+    , className =?. "element"
     ]
 
 
@@ -163,7 +164,7 @@ decoTheme = def {         activeColor = "#<#{BACKGROUND_ALT}#>"
                 ,   urgentBorderColor = "#<#{PRIMARY}#>"
                 ,     activeTextColor = "#<#{PRIMARY}#>"
                 ,   inactiveTextColor = "#<#{FOREGROUND_ALT}#>"
-                ,     urgentTextColor = "#<#{PRIMARY}#>"
+                ,     urgentTextColor = "#<#{SECONDARY}#>"
                 ,            fontName = "xft:terminus:size=12"
                 }
 
