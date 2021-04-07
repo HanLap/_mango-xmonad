@@ -28,6 +28,7 @@ import XMonad.Layout.BoringWindows
 import XMonad.Actions.SpawnOn
 import System.Process
 import XMonad.Layout.IndependentScreens
+import Data.Monoid
 
 
 
@@ -37,7 +38,6 @@ import XMonad.Layout.IndependentScreens
 
 
 
--- | Prefix matching version of `=?`
 
 (=?>) :: Query String -> String -> Query Bool
 (=?>) q x = fmap (isPrefixOf x) q
@@ -51,6 +51,7 @@ matches l s = any ((`isInfixOf` map toLower s) . map toLower) l
 myTerminal = "alacritty"
 
 myModMask = mod4Mask
+-- | Prefix matching version of `=?`
 
 myBorderWith = 3
 myFocusedBorderColor = "#<#{PRIMARY}#>"
@@ -127,6 +128,27 @@ scratchpads =
 
 
 
+-- | Naughty windows that won't stop trying to steal focus.
+offenders :: [Query Bool]
+offenders =
+    [ className =?. "Steam"
+    , className =?. "Thunderbird"
+    , className =?. "Mail"
+    , className =?. "notification-daemon"
+    , className =?. "Firefox"
+    , className =?. "mutt"
+    , className =?. "kitty"
+    , className =?. "discord"
+    , className =?. "wineboot.exe"
+    , className =?. "signal"
+    ]
+
+
+
+
+
+
+
 mySpacing = spacingRaw False
                        (Border 40 10 10 10) True
                        (Border  3  3  3  3) True
@@ -168,6 +190,40 @@ myLayout =
      delta   = 3/100
 
 
+
+-- | Adds `guardHook` to an existing config. Easiest way to make sure that it
+--   catches events for /all/ custom hooks.
+guardAgainst :: [Query Bool] -> XConfig a -> XConfig a
+guardAgainst list conf = conf { handleEventHook = guardHook list
+                                                $ handleEventHook conf
+                              }
+
+
+
+-- | Blocks events of type @_NET_ACTIVE_WINDOW@ for windows matching any of the
+--   given queries from entering the given event hook.
+guardHook :: [Query Bool] -> (Event -> X All) -> Event -> X All
+guardHook list hook ev@ClientMessageEvent
+                            { ev_window       = window
+                            , ev_message_type = mtype
+                            } = do
+
+    actWind <- getAtom "_NET_ACTIVE_WINDOW"
+
+    if mtype /= actWind
+       then hook ev
+       else do
+            b <- or <$> mapM (`runQuery` window) list
+
+            if b
+               then return $ All False
+               else hook ev
+
+guardHook _ hook ev = hook ev
+
+
+
+
 -- Main configuration, override the defaults to your liking.
 myConfig = desktopConfig
     { terminal           = myTerminal
@@ -185,6 +241,7 @@ myConfig = desktopConfig
     }
 
 main = xmonad
+     $ guardAgainst offenders
      $ docks
     --  $ fullscreenSupport
        myConfig
@@ -276,7 +333,7 @@ myKeys conf@XConfig {XMonad.modMask = modm} = M.fromList $
     -- Quit xmonad
 --    , ((modm .|. shiftMask, xK_     ), io exitSuccess)
     -- Restart xmonad
-    , ((modm              , xK_r     ), spawn "xmonad --recompile; xmonad --restart")
+    , ((modm              , xK_r     ), rebuild)
 
     -- Run xmessage with a summary of the default keybindings (useful for beginners)
     , ((modm .|. shiftMask, xK_slash ), spawn ("echo \"" ++ help ++ "\" | xmessage -file -"))
@@ -308,6 +365,11 @@ myKeys conf@XConfig {XMonad.modMask = modm} = M.fromList $
       toggleFullscreen = do toggleWindowSpacingEnabled
                             toggleScreenSpacingEnabled
                             sendMessage $ Toggle NOBORDERS
+
+      rebuild = spawn "xmonad --recompile                  && \
+                      \xmonad --restart                    && \
+                      \notify-send \"rebuild xmonad\"      || \
+                      \notify-send \"xmonad build failed\"    "
 
 
 help = unlines ["The default modifier key is 'alt'. Default keybindings:",
