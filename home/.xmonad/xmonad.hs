@@ -103,6 +103,7 @@ myManageHook =
     , className =?. "platform-Emulicious" --> doFloat
     , className =?. "discord"             --> doShift "6"
     , title     =?. "Application Finder"  --> placeHook (smart (0.5, 0.5)) <+> doFloat
+    , title     =?. "Unlock Keyring"      --> placeHook (smart (0.5, 0.5)) <+> doFloat
     , namedScratchpadManageHook scratchpads
     ]
 
