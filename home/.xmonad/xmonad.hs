@@ -172,8 +172,8 @@ myLayout = mySpacing
          $                                  tiled ||| tabs
     where
       -- default tiling algorithm partitions the screen into two panes
-      tiled = Tall 1 (3/100) (1/2) 
-      tabs  = tabbed shrinkText decoTheme 
+      tiled = Tall 1 (3/100) (1/2)
+      tabs  = tabbed shrinkText decoTheme
 
 
 
@@ -243,13 +243,13 @@ customLogHook = ewmhDesktopsLogHookCustom (filter ((/= "NSP") . W.tag))
 --
 myKeys conf@XConfig {XMonad.modMask = modm} = M.fromList $
     -- launch a terminal
-    [ ((modm .|. shiftMask, xK_Return), spawn $ XMonad.terminal conf      )  
+    [ ((modm .|. shiftMask, xK_Return), spawn $ XMonad.terminal conf      )
     -- launch application menu
-    , ((modm,               xK_p     ), rofi "drun"                       ) 
+    , ((modm,               xK_p     ), rofi "drun"                       )
     -- launch run menu
     , ((modm .|. shiftMask, xK_p     ), rofi "run"                        )
     -- screenshot
-    , ((0,                  xK_Print ), snip                              ) 
+    , ((0,                  xK_Print ), snip                              )
     -- close focused window
     , ((modm .|. shiftMask, xK_c     ), kill                              )
     -- Rotate through the available layout algorithms
@@ -257,7 +257,7 @@ myKeys conf@XConfig {XMonad.modMask = modm} = M.fromList $
     -- toggle horizontal reflect
     , ((modm .|. shiftMask, xK_v     ), sendMessage $ Toggle REFLECTX     )
     -- toggle fullscreen
-    , ((modm,               xK_Escape), toggleFullscreen                  ) 
+    , ((modm,               xK_Escape), toggleFullscreen                  )
     --  Reset the layouts on the current workspace to default
     , ((modm .|. shiftMask, xK_space ), setLayout $ XMonad.layoutHook conf)
     -- Resize viewed windows to the correct size
@@ -292,7 +292,7 @@ myKeys conf@XConfig {XMonad.modMask = modm} = M.fromList $
     , ((0, xF86XK_AudioRaiseVolume   ), spawn "pactl set-sink-volume @DEFAULT_SINK@ +5%" )
     , ((0, xF86XK_AudioMute          ), spawn "pactl set-sink-mute @DEFAULT_SINK@ toggle")
     , ((0, xF86XK_AudioPlay          ), spawn "playerctl -p playerctld play-pause"       )
-    , ((0, xF86XK_AudioPrev          ), spawn "playerctl -p playerctld previous"         ) 
+    , ((0, xF86XK_AudioPrev          ), spawn "playerctl -p playerctld previous"         )
     , ((0, xF86XK_AudioNext          ), spawn "playerctl -p playerctld next"             )
     , ((0, xF86XK_MonBrightnessUp    ), spawn "xbacklight -inc 10"                       )
     , ((0, xF86XK_MonBrightnessDown  ), spawn "xbacklight -dec 10"                       )
@@ -343,7 +343,7 @@ myKeys conf@XConfig {XMonad.modMask = modm} = M.fromList $
       toggleFullscreen = do toggleWindowSpacingEnabled
                             toggleScreenSpacingEnabled
                             sendMessage $ Toggle NOBORDERS
-      
+
       rebuild :: X()
       rebuild = spawn "xmonad --recompile                  && \
                       \xmonad --restart                    && \
