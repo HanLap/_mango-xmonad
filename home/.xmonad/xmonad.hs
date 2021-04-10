@@ -62,24 +62,22 @@ myWorkspaces:: [WorkspaceId]
 myWorkspaces = ["1", "2", "3", "4", "5", "6"]
 
 myStartupHook = do
-    spawnOnce "redshift -O 4000k"
-    spawnOnce "xsetroot -cursor_name left_ptr"
-    spawnOnce "~/.config/polybar/launch.sh"
-    spawn "~/.wallpapers/setup.sh"
-    spawn "~/.config/dunst/reload"
-    spawnOnce "picom --experimental-backends"
---    spawnOnce "tint2 -c ~/.config/tint2/clock.tint2rc"
---    spawnOnce "tint2 -c ~/.config/tint2/workspaces.tint2rc"
-    spawnOnce "dropbox"
+    spawnOnce   "redshift -O 4000k"
+    spawnOnce   "xsetroot -cursor_name left_ptr"
+    spawnOnce   "~/.config/polybar/launch.sh"
+    spawn       "~/.wallpapers/setup.sh"
+    spawn       "~/.config/dunst/reload"
+    spawnOnce   "picom --experimental-backends"
+    spawnOnce   "dropbox"
 
 
-    spawn "pulseaudio --start" -- @TODO comment out
+    spawn       "pulseaudio --start"
     spawnOn "6" "discord"
     spawnOn "6" "/opt/Element/element-desktop"
     spawnOn "6" "killall signal-desktop; /opt/Signal/signal-desktop"
     spawnOn "6" "app-launch WhatsApp"
 
-    spawn "timeout 0.5 xsettingsd || true"
+    spawn       "timeout 0.5 xsettingsd"
 
 ------------------------------------------------------------------------
 -- Window rules:
@@ -96,40 +94,36 @@ myStartupHook = do
 -- To match on the WM_NAME, you can use 'title' in the same way that
 -- 'className' and 'resource' are used below.
 --
-myManageHook =
-      manageSpawn
-  <+> composeAll
-    [
-      isFullscreen                        --> doFullFloat
-    -- , className =? "Pavucontrol"        --> customFloating (W.RationalRect 0.2 0.05 0.6 0.4)
-    , resource  =?. "desktop_window"      --> doIgnore
-    , className =?. "platform-Emulicious" --> doFloat
-    , className =?. "discord"             --> doShift "6"
-    , className =?. "spotify"             --> doShift "5"
-    , title     =?. "Application Finder"  --> placeHook (smart (0.5, 0.5)) <+> doFloat
-    , className =?. "gcr-prompter"        --> doCenterFloat
-    , namedScratchpadManageHook scratchpads
-    ]
+myManageHook = manageSpawn
+           <+> composeAll
+             [
+               isFullscreen                        --> doFullFloat
+             -- , className =? "Pavucontrol"        --> customFloating (W.RationalRect 0.2 0.05 0.6 0.4)
+             , className =?. "discord"             --> doShift "6"
+             , className =?. "spotify"             --> doShift "5"
+             , className =?. "gcr-prompter"        --> doCenterFloat
+             ]
+           <+> namedScratchpadManageHook scratchpads
 
 
 scratchpads :: NamedScratchpads
 scratchpads =
-  [ NS { name  = "audio"
-       , cmd   = "pavucontrol"
-       , query = className  =?. "Pavucontrol"
-       , hook  = customFloating (W.RationalRect 0.2 0.03 0.6 0.4)
-       }
-  , NS { name  = "password"
-       , cmd   = "/opt/Bitwarden/bitwarden"
-       , query = className =?. "Bitwarden"
-       , hook  = customFloating (W.RationalRect 0.2 0.03 0.6 0.6)
-       }
-  , NS { name  = "terminal"
-       , cmd   = "alacritty --class scratch --title scratch"
-       , query = resource =?. "scratch"
-       , hook  = customFloating (W.RationalRect 0.2 0.03 0.6 0.6)
-       }
-  ]
+    [ NS { name  = "audio"
+         , cmd   = "pavucontrol"
+         , query = className  =?. "Pavucontrol"
+         , hook  = customFloating (W.RationalRect 0.2 0.03 0.6 0.4)
+         }
+    , NS { name  = "password"
+         , cmd   = "/opt/Bitwarden/bitwarden"
+         , query = className =?. "Bitwarden"
+         , hook  = customFloating (W.RationalRect 0.2 0.03 0.6 0.6)
+         }
+    , NS { name  = "terminal"
+         , cmd   = "alacritty --class scratch --title scratch"
+         , query = resource =?. "scratch"
+         , hook  = customFloating (W.RationalRect 0.2 0.03 0.6 0.6)
+         }
+    ]
 
 
 
@@ -138,11 +132,7 @@ offenders :: [Query Bool]
 offenders =
     [ className =?. "Steam"
     , className =?. "Thunderbird"
-    , className =?. "Mail"
-    , className =?. "notification-daemon"
     , className =?. "Firefox"
-    , className =?. "mutt"
-    , className =?. "kitty"
     , className =?. "discord"
     , className =?. "signal"
     , className =?. "element"
@@ -173,20 +163,17 @@ decoTheme = def {         activeColor = "#<#{BACKGROUND_ALT}#>"
 
 
 
-myLayout =
-        mySpacing
+myLayout = mySpacing
          $ mkToggle (NOBORDERS ?? EOT)
          $ mkToggle (REFLECTX  ?? EOT)
          $ windowNavigation
          $ boringWindows
-        --  $ subLayout [0] (tabbed shrinkText decoTheme)
          $ onWorkspace (myWorkspaces !! 5) (tabs  ||| tiled)
          $                                  tiled ||| tabs
-
     where
-     -- default tiling algorithm partitions the screen into two panes
-     tiled = Tall 1 (3/100) (1/2) 
-     tabs  = tabbed shrinkText decoTheme 
+      -- default tiling algorithm partitions the screen into two panes
+      tiled = Tall 1 (3/100) (1/2) 
+      tabs  = tabbed shrinkText decoTheme 
 
 
 
@@ -256,70 +243,62 @@ customLogHook = ewmhDesktopsLogHookCustom (filter ((/= "NSP") . W.tag))
 --
 myKeys conf@XConfig {XMonad.modMask = modm} = M.fromList $
     -- launch a terminal
-    [ ((modm .|. shiftMask, xK_Return), spawn $ XMonad.terminal conf)
+    [ ((modm .|. shiftMask, xK_Return), spawn $ XMonad.terminal conf      )  
     -- launch application menu
-    , ((modm,               xK_p     ), spawn $ rofi "drun")
+    , ((modm,               xK_p     ), rofi "drun"                       ) 
     -- launch run menu
-    , ((modm .|. shiftMask, xK_p     ), spawn $ rofi "run")
+    , ((modm .|. shiftMask, xK_p     ), rofi "run"                        )
     -- screenshot
-    , ((0,                  xK_Print ), snip)
+    , ((0,                  xK_Print ), snip                              ) 
     -- close focused window
-    , ((modm .|. shiftMask, xK_c     ), kill)
+    , ((modm .|. shiftMask, xK_c     ), kill                              )
     -- Rotate through the available layout algorithms
-    , ((modm,               xK_space ), sendMessage NextLayout)
+    , ((modm,               xK_space ), sendMessage NextLayout            )
     -- toggle horizontal reflect
-    , ((modm .|. shiftMask, xK_v     ), sendMessage $ Toggle REFLECTX)
+    , ((modm .|. shiftMask, xK_v     ), sendMessage $ Toggle REFLECTX     )
     -- toggle fullscreen
-    , ((modm,               xK_Escape), toggleFullscreen)
-
+    , ((modm,               xK_Escape), toggleFullscreen                  ) 
     --  Reset the layouts on the current workspace to default
     , ((modm .|. shiftMask, xK_space ), setLayout $ XMonad.layoutHook conf)
     -- Resize viewed windows to the correct size
-    , ((modm,               xK_n     ), refresh)
+    , ((modm,               xK_n     ), refresh                           )
     -- Move focus to the next window
-    , ((modm,               xK_Tab   ), windows W.focusDown)
+    , ((modm,               xK_Tab   ), windows W.focusDown               )
     -- Move focus to the next window
-    , ((modm,               xK_d     ), windows W.focusDown)
+    , ((modm,               xK_d     ), windows W.focusDown               )
     -- Move focus to the previous window
-    , ((modm,               xK_a     ), windows W.focusUp)
+    , ((modm,               xK_a     ), windows W.focusUp                 )
     -- Move focus to the master window
-    , ((modm,               xK_m     ), windows W.focusMaster)
+    , ((modm,               xK_m     ), windows W.focusMaster             )
     -- Swap the focused window and the master window
-    , ((modm,               xK_Return), windows W.swapMaster)
+    , ((modm,               xK_Return), windows W.swapMaster              )
     -- Swap the focused window with the next window
-    , ((modm .|. shiftMask, xK_d     ), windows W.swapDown)
+    , ((modm .|. shiftMask, xK_d     ), windows W.swapDown                )
     -- Swap the focused window with the previous window
-    , ((modm .|. shiftMask, xK_a     ), windows W.swapUp)
+    , ((modm .|. shiftMask, xK_a     ), windows W.swapUp                  )
     -- Shrink the master area
-    , ((modm,               xK_h     ), sendMessage Shrink)
+    , ((modm,               xK_h     ), sendMessage Shrink                )
     -- Expand the master area
-    , ((modm,               xK_l     ), sendMessage Expand)
+    , ((modm,               xK_l     ), sendMessage Expand                )
     -- Push window back into tiling
-    , ((modm .|. shiftMask, xK_t     ), withFocused $ windows . W.sink)
+    , ((modm .|. shiftMask, xK_t     ), withFocused $ windows . W.sink    )
     -- Increment the number of windows in the master area
-    , ((modm              , xK_period), sendMessage (IncMasterN 1))
-    -- , ((modm              , xK_period ), increaseLimit)
+    , ((modm              , xK_period), sendMessage (IncMasterN 1)        )
     -- Deincrement the number of windows in the master area
-    , ((modm              , xK_comma ), sendMessage (IncMasterN (-1)))
-    -- , ((modm              , xK_comma), decreaseLimit)
-
-
-    , ((modm .|. controlMask, xK_m), withFocused (sendMessage . MergeAll))
-    , ((modm .|. controlMask, xK_u), withFocused (sendMessage . UnMerge))
-
+    , ((modm              , xK_comma ), sendMessage (IncMasterN (-1))     )
 
     -- media keys
-    , ((0, xF86XK_AudioLowerVolume   ), spawn "pactl set-sink-volume @DEFAULT_SINK@ -5%")
-    , ((0, xF86XK_AudioRaiseVolume   ), spawn "pactl set-sink-volume @DEFAULT_SINK@ +5%")
+    , ((0, xF86XK_AudioLowerVolume   ), spawn "pactl set-sink-volume @DEFAULT_SINK@ -5%" )
+    , ((0, xF86XK_AudioRaiseVolume   ), spawn "pactl set-sink-volume @DEFAULT_SINK@ +5%" )
     , ((0, xF86XK_AudioMute          ), spawn "pactl set-sink-mute @DEFAULT_SINK@ toggle")
-    , ((0, xF86XK_AudioPlay          ), spawn "playerctl -p playerctld play-pause")
-    , ((0, xF86XK_AudioPrev          ), spawn "playerctl -p playerctld previous")
-    , ((0, xF86XK_AudioNext          ), spawn "playerctl -p playerctld next")
-    , ((0, xF86XK_MonBrightnessUp    ), spawn "xbacklight -inc 10")
-    , ((0, xF86XK_MonBrightnessDown  ), spawn "xbacklight -dec 10")
+    , ((0, xF86XK_AudioPlay          ), spawn "playerctl -p playerctld play-pause"       )
+    , ((0, xF86XK_AudioPrev          ), spawn "playerctl -p playerctld previous"         ) 
+    , ((0, xF86XK_AudioNext          ), spawn "playerctl -p playerctld next"             )
+    , ((0, xF86XK_MonBrightnessUp    ), spawn "xbacklight -inc 10"                       )
+    , ((0, xF86XK_MonBrightnessDown  ), spawn "xbacklight -dec 10"                       )
 
     -- scratchpads
-    , ((modm              , xK_v     ), namedScratchpadAction scratchpads  "audio")
+    , ((modm              , xK_v     ), namedScratchpadAction scratchpads  "audio"   )
     , ((modm              , xK_b     ), namedScratchpadAction scratchpads  "password")
     , ((modm              , xK_t     ), namedScratchpadAction scratchpads  "terminal")
 
@@ -333,9 +312,6 @@ myKeys conf@XConfig {XMonad.modMask = modm} = M.fromList $
 --    , ((modm .|. shiftMask, xK_     ), io exitSuccess)
     -- Restart xmonad
     , ((modm              , xK_r     ), rebuild)
-
-    -- Run xmessage with a summary of the default keybindings (useful for beginners)
-    , ((modm .|. shiftMask, xK_slash ), spawn ("echo \"" ++ help ++ "\" | xmessage -file -"))
     ]
     ++
 
@@ -355,68 +331,21 @@ myKeys conf@XConfig {XMonad.modMask = modm} = M.fromList $
     [((m .|. modm, key), screenWorkspace sc >>= flip whenJust (windows . f))
         | (key, sc) <- zip [xK_q, xK_e, xK_w] [0..]
         , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]]
-    where
-      rofi :: String -> String
-      rofi show = "rofi -show " ++ show ++ " -theme \"/home/hannah/.config/rofi/launcher/style\""
 
+    where
+      rofi :: String -> X()
+      rofi show = spawn $ "rofi -show " ++ show ++ " -theme \"/home/hannah/.config/rofi/launcher/style\""
+
+      snip :: X()
       snip = spawn "import png:- | xclip -selection c -t image/png -i"
 
+      toggleFullscreen :: X()
       toggleFullscreen = do toggleWindowSpacingEnabled
                             toggleScreenSpacingEnabled
                             sendMessage $ Toggle NOBORDERS
-
+      
+      rebuild :: X()
       rebuild = spawn "xmonad --recompile                  && \
                       \xmonad --restart                    && \
                       \notify-send \"rebuild xmonad\"      || \
                       \notify-send \"xmonad build failed\"    "
-
-
-help = unlines ["The default modifier key is 'alt'. Default keybindings:",
-    "",
-    "-- launching and killing programs",
-    "mod-Shift-Enter  Launch xterminal",
-    "mod-p            Launch dmenu",
-    "mod-Shift-p      Launch gmrun",
-    "mod-Shift-c      Close/kill the focused window",
-    "mod-Space        Rotate through the available layout algorithms",
-    "mod-Shift-Space  Reset the layouts on the current workSpace to default",
-    "mod-n            Resize/refresh viewed windows to the correct size",
-    "",
-    "-- move focus up or down the window stack",
-    "mod-Tab        Move focus to the next window",
-    "mod-Shift-Tab  Move focus to the previous window",
-    "mod-j          Move focus to the next window",
-    "mod-k          Move focus to the previous window",
-    "mod-m          Move focus to the master window",
-    "",
-    "-- modifying the window order",
-    "mod-Return   Swap the focused window and the master window",
-    "mod-Shift-j  Swap the focused window with the next window",
-    "mod-Shift-k  Swap the focused window with the previous window",
-    "",
-    "-- resizing the master/slave ratio",
-    "mod-h  Shrink the master area",
-    "mod-l  Expand the master area",
-    "",
-    "-- floating layer support",
-    "mod-t  Push window back into tiling; unfloat and re-tile it",
-    "",
-    "-- increase or decrease number of windows in the master area",
-    "mod-comma  (mod-,)   Increment the number of windows in the master area",
-    "mod-period (mod-.)   Deincrement the number of windows in the master area",
-    "",
-    "-- quit, or restart",
-    "mod-Shift-q  Quit xmonad",
-    "mod-q        Restart xmonad",
-    "mod-[1..9]   Switch to workSpace N",
-    "",
-    "-- Workspaces & screens",
-    "mod-Shift-[1..9]   Move client to workspace N",
-    "mod-{w,e,r}        Switch to physical/Xinerama screens 1, 2, or 3",
-    "mod-Shift-{w,e,r}  Move client to screen 1, 2, or 3",
-    "",
-    "-- Mouse bindings: default actions bound to mouse events",
-    "mod-button1  Set the window to floating mode and move by dragging",
-    "mod-button2  Raise the window to the top of the stack",
-    "mod-button3  Set the window to floating mode and resize by dragging"]
-
