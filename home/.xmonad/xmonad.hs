@@ -67,14 +67,14 @@ myStartupHook = do
     spawnOnce   "~/.config/polybar/launch.sh"
     spawn       "~/.wallpapers/setup.sh"
     spawn       "~/.config/dunst/reload"
-    spawnOnce   "picom --experimental-backends"
+    spawnOnce   "picom"
     spawnOnce   "dropbox"
 
 
     spawn       "pulseaudio --start"
     spawnOn "6" "discord"
-    spawnOn "6" "/opt/Element/element-desktop"
-    spawnOn "6" "killall signal-desktop; /opt/Signal/signal-desktop"
+    spawnOn "6" "pkill element ; /opt/Element/element-desktop"
+    spawnOn "6" "pkill signal-desktop; /opt/Signal/signal-desktop"
     spawnOn "6" "app-launch WhatsApp"
 
     spawn       "timeout 0.5 xsettingsd"
