@@ -168,6 +168,7 @@ myLayout = mySpacing
          $ mkToggle (REFLECTX  ?? EOT)
          $ windowNavigation
          $ boringWindows
+         $ onWorkspace (myWorkspaces !! 4) (tabs  ||| tiled)
          $ onWorkspace (myWorkspaces !! 5) (tabs  ||| tiled)
          $                                  tiled ||| tabs
     where
