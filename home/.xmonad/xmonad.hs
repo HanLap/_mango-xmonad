@@ -251,6 +251,7 @@ myKeys conf@XConfig {XMonad.modMask = modm} = M.fromList $
     , ((modm .|. shiftMask, xK_p     ), rofi "run"                        )
     -- screenshot
     , ((0,                  xK_Print ), snip                              )
+    , ((         shiftMask, xK_Print ), snipToTmp                         )
     -- close focused window
     , ((modm .|. shiftMask, xK_c     ), kill                              )
     -- Rotate through the available layout algorithms
@@ -339,6 +340,9 @@ myKeys conf@XConfig {XMonad.modMask = modm} = M.fromList $
 
       snip :: X()
       snip = spawn "import png:- | xclip -selection c -t image/png -i"
+
+      snipToTmp :: X()
+      snipToTmp = spawn "import png:/tmp/snip.png"
 
       toggleFullscreen :: X()
       toggleFullscreen = do toggleWindowSpacingEnabled
