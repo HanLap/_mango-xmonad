@@ -67,7 +67,7 @@ myStartupHook = do
     spawnOnce   "~/.config/polybar/launch.sh"
     spawn       "~/.wallpapers/setup.sh"
     spawn       "~/.config/dunst/reload"
-    spawnOnce   "picom"
+    spawnOnce   "picom --experimental-backends"
     spawnOnce   "dropbox"
 
 
