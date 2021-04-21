@@ -255,6 +255,7 @@ myKeys conf@XConfig {XMonad.modMask = modm} = M.fromList $
     , ((modm,               xK_p     ), rofi "drun"                       )
     -- launch run menu
     , ((modm .|. shiftMask, xK_p     ), rofi "run"                        )
+    , ((modm,               xK_s     ), rofi "window"                     )
     -- dmenu actions
     , ((modm .|. shiftMask, xK_o     ), R.defaultCommands >>= R.runCommand)
     -- screenshot
