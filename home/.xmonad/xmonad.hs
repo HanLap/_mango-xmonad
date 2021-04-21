@@ -31,6 +31,7 @@ import XMonad.Layout.IndependentScreens
 import Data.Monoid
 import XMonad.Layout.PerWorkspace
 
+import qualified XMonad.Actions.Commands as R
 
 
 -- | Case-insensitive version of `=?`
@@ -55,7 +56,9 @@ myModMask = mod4Mask
 -- | Prefix matching version of `=?`
 
 myBorderWith = 3
+myFocusedBorderColor:: [Char]
 myFocusedBorderColor = "#<#{PRIMARY}#>"
+myNormalBorderColor:: [Char]
 myNormalBorderColor = "#<#{BACKGROUND_ALT}#>"
 
 myWorkspaces:: [WorkspaceId]
@@ -95,15 +98,18 @@ myStartupHook = do
 -- 'className' and 'resource' are used below.
 --
 myManageHook = manageSpawn
-           <+> composeAll
-             [
-               isFullscreen                        --> doFullFloat
-             -- , className =? "Pavucontrol"        --> customFloating (W.RationalRect 0.2 0.05 0.6 0.4)
-             , className =?. "discord"             --> doShift "6"
-             , className =?. "spotify"             --> doShift "5"
-             , className =?. "gcr-prompter"        --> doCenterFloat
-             ]
            <+> namedScratchpadManageHook scratchpads
+           <+> composeAll
+               [
+                 isFullscreen                        --> doFullFloat
+               -- , className =? "Pavucontrol"        --> customFloating (W.RationalRect 0.2 0.05 0.6 0.4)
+               , className =?. "firefox"             --> doShift "1"
+               , className =?. "spotify"             --> doShift "5"
+               , className =?. "discord"             --> doShift "6"
+               , className =?. "element"             --> doShift "6"
+               , className =?. "signal"              --> doShift "6"
+               , className =?. "gcr-prompter"        --> doCenterFloat
+               ]
 
 
 scratchpads :: NamedScratchpads
@@ -249,6 +255,8 @@ myKeys conf@XConfig {XMonad.modMask = modm} = M.fromList $
     , ((modm,               xK_p     ), rofi "drun"                       )
     -- launch run menu
     , ((modm .|. shiftMask, xK_p     ), rofi "run"                        )
+    -- dmenu actions
+    , ((modm .|. shiftMask, xK_o     ), R.defaultCommands >>= R.runCommand)
     -- screenshot
     , ((0,                  xK_Print ), snip                              )
     , ((         shiftMask, xK_Print ), snipToTmp                         )
@@ -296,8 +304,8 @@ myKeys conf@XConfig {XMonad.modMask = modm} = M.fromList $
     , ((0, xF86XK_AudioPlay          ), spawn "playerctl -p playerctld play-pause"       )
     , ((0, xF86XK_AudioPrev          ), spawn "playerctl -p playerctld previous"         )
     , ((0, xF86XK_AudioNext          ), spawn "playerctl -p playerctld next"             )
-    , ((0, xF86XK_MonBrightnessUp    ), spawn "xbacklight -inc 10"                       )
-    , ((0, xF86XK_MonBrightnessDown  ), spawn "xbacklight -dec 10"                       )
+    , ((0, xF86XK_MonBrightnessUp    ), spawn "xbacklight -inc 5"                       )
+    , ((0, xF86XK_MonBrightnessDown  ), spawn "xbacklight -dec 5"                       )
 
     -- scratchpads
     , ((modm              , xK_v     ), namedScratchpadAction scratchpads  "audio"   )
