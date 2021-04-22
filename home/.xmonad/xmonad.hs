@@ -62,7 +62,7 @@ myNormalBorderColor:: [Char]
 myNormalBorderColor = "#<#{BACKGROUND_ALT}#>"
 
 myWorkspaces:: [WorkspaceId]
-myWorkspaces = ["1", "2", "3", "4", "5", "6"]
+myWorkspaces = ["www", "code", "term", "misc", "music", "chat", "mail"]
 
 myStartupHook = do
     spawnOnce   "redshift -O 4000k"
@@ -74,13 +74,12 @@ myStartupHook = do
     spawnOnce   "dropbox"
 
 
-    spawn       "pulseaudio --start"
-    spawnOn "6" "discord"
-    spawnOn "6" "pkill element ; /opt/Element/element-desktop"
-    spawnOn "6" "pkill signal-desktop; /opt/Signal/signal-desktop"
-    spawnOn "6" "app-launch WhatsApp"
-
-    spawn       "timeout 0.5 xsettingsd"
+    spawn "pulseaudio --start"
+    spawn "discord"
+    spawn "pkill element ; /opt/Element/element-desktop"
+    spawn "pkill signal-desktop; /opt/Signal/signal-desktop"
+    spawn "thunderbird"
+    spawn "timeout 0.5 xsettingsd"
 
 ------------------------------------------------------------------------
 -- Window rules:
@@ -103,11 +102,14 @@ myManageHook = manageSpawn
                [
                  isFullscreen                        --> doFullFloat
                -- , className =? "Pavucontrol"        --> customFloating (W.RationalRect 0.2 0.05 0.6 0.4)
-               , className =?. "firefox"             --> doShift "1"
-               , className =?. "spotify"             --> doShift "5"
-               , className =?. "discord"             --> doShift "6"
-               , className =?. "element"             --> doShift "6"
-               , className =?. "signal"              --> doShift "6"
+               , className =?. "firefox"             --> doShift "www"
+               , className =?. "code"                --> doShift "code"
+               , className =?. "jetbrains-idea"      --> doShift "code"
+               , className =?. "spotify"             --> doShift "chat"
+               , className =?. "discord"             --> doShift "chat"
+               , className =?. "element"             --> doShift "chat"
+               , className =?. "signal"              --> doShift "chat"
+               , className =?. "thunderbird"         --> doShift "mail"
                , className =?. "gcr-prompter"        --> doCenterFloat
                ]
 
