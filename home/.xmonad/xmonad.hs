@@ -65,21 +65,8 @@ myWorkspaces:: [WorkspaceId]
 myWorkspaces = ["www", "code", "term", "misc", "music", "chat", "mail"]
 
 myStartupHook = do
-    spawnOnce   "redshift -O 4000k"
-    spawnOnce   "xsetroot -cursor_name left_ptr"
-    spawnOnce   "~/.config/polybar/launch.sh"
-    spawn       "~/.wallpapers/setup.sh"
-    spawn       "~/.config/dunst/reload"
-    spawnOnce   "picom --experimental-backends"
-    spawnOnce   "dropbox"
+    spawnOnce "comango hook wminit"
 
-
-    spawn "pulseaudio --start"
-    spawn "discord"
-    spawn "pkill element ; /opt/Element/element-desktop"
-    spawn "pkill signal-desktop; /opt/Signal/signal-desktop"
-    spawn "thunderbird"
-    spawn "timeout 0.5 xsettingsd"
 
 ------------------------------------------------------------------------
 -- Window rules:
