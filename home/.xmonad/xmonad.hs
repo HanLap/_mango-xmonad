@@ -64,6 +64,26 @@ myNormalBorderColor = "#<#{BACKGROUND_ALT}#>"
 myWorkspaces:: [WorkspaceId]
 myWorkspaces = ["www", "code", "term", "misc", "music", "chat", "mail"]
 
+{- wss:: [[WorkspaceId,[[Char]]]
+wss = [ [ "www"   ,
+            [ "firefox"       ]
+        ]
+      , [ "code"  ,
+            [ "code"
+            , "jetbrains-ide" ]
+        ]
+      , [ "term"  , [         ]]
+      , [ "music" ,
+            [ "spotify"       ]
+            ]
+      , [ "chat"  ,
+            [ "discord"
+            , "element"
+            , "signal"        ]]
+      , [ "mail"  ,
+            [ "thunderbird"   ]]
+      ]
+-}
 myStartupHook = do
     spawnOnce "comango hook wminit"
 
