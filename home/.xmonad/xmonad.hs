@@ -62,7 +62,7 @@ myNormalBorderColor:: [Char]
 myNormalBorderColor = "#<#{BACKGROUND_ALT}#>"
 
 myWorkspaces:: [WorkspaceId]
-myWorkspaces = ["www", "code", "term", "misc", "music", "chat", "mail"]
+myWorkspaces = ["www", "code", "term", "misc", "music", "chat", "mail", "zoom"]
 
 {- wss:: [[WorkspaceId,[[Char]]]
 wss = [ [ "www"   ,
@@ -117,6 +117,7 @@ myManageHook = manageSpawn
                , className =?. "element"             --> doShift "chat"
                , className =?. "signal"              --> doShift "chat"
                , className =?. "thunderbird"         --> doShift "mail"
+               , className =?. "zoom"                --> doShift "zoom"
                , className =?. "gcr-prompter"        --> doCenterFloat
                ]
 
