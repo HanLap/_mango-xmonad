@@ -367,9 +367,9 @@ myKeys conf@XConfig {XMonad.modMask = modm} = M.fromList $
       toggleFullscreen = do toggleWindowSpacingEnabled
                             toggleScreenSpacingEnabled
                             sendMessage ToggleStruts
-      focusUpNoWrap :: X()
-      focusUpNoWrap =
-                    when () $ windows W.focusUp
+--      focusUpNoWrap :: X()
+--      focusUpNoWrap =
+--                    when () $ windows W.focusUp
 
       rebuild :: X()
       rebuild = spawn "xmonad --recompile                  && \
