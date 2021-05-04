@@ -161,7 +161,7 @@ offenders =
 
 
 mySpacing = spacingRaw False
-                       (Border 40 10 10 10) True
+                       (Border 10 10 10 10) True
                        (Border  3  3  3  3) True
 
 decoTheme :: Theme
@@ -179,8 +179,8 @@ decoTheme = def {         activeColor = "#<#{BACKGROUND_ALT}#>"
 
 
 
-myLayout = mySpacing
-         $ mkToggle (NOBORDERS ?? EOT)
+myLayout = avoidStruts
+         $ mySpacing
          $ mkToggle (REFLECTX  ?? EOT)
          $ windowNavigation
          $ boringWindows
@@ -366,7 +366,10 @@ myKeys conf@XConfig {XMonad.modMask = modm} = M.fromList $
       toggleFullscreen :: X()
       toggleFullscreen = do toggleWindowSpacingEnabled
                             toggleScreenSpacingEnabled
-                            sendMessage $ Toggle NOBORDERS
+                            sendMessage ToggleStruts
+      focusUpNoWrap :: X()
+      focusUpNoWrap =
+                    when () $ windows W.focusUp
 
       rebuild :: X()
       rebuild = spawn "xmonad --recompile                  && \
