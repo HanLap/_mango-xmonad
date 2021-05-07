@@ -112,6 +112,7 @@ myManageHook = manageSpawn
                , className =?. "firefox"             --> doShift "www"
                , className =?. "code"                --> doShift "code"
                , className =?. "jetbrains-idea"      --> doShift "code"
+               , className =?. "eclipse"             --> doShift "code"
                , className =?. "spotify"             --> doShift "chat"
                , className =?. "discord"             --> doShift "chat"
                , className =?. "element"             --> doShift "chat"
