@@ -117,6 +117,7 @@ myManageHook = manageSpawn
                , className =?. "discord"             --> doShift "chat"
                , className =?. "element"             --> doShift "chat"
                , className =?. "signal"              --> doShift "chat"
+               , className =?. "whatsapp-desktop"    --> doShift "chat"
                , className =?. "thunderbird"         --> doShift "mail"
                , className =?. "zoom"                --> doShift "zoom"
                , className =?. "gcr-prompter"        --> doCenterFloat
