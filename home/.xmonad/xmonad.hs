@@ -152,6 +152,7 @@ offenders =
     [ className =?. "Steam"
     , className =?. "Thunderbird"
     , className =?. "Firefox"
+    , className =?. "google-chrome"
     , className =?. "discord"
     , className =?. "signal"
     , className =?. "element"
