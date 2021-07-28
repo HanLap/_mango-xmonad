@@ -30,6 +30,7 @@ import System.Process
 import XMonad.Layout.IndependentScreens
 import Data.Monoid
 import XMonad.Layout.PerWorkspace
+import XMonad.Layout.NoBorders
 
 import qualified XMonad.Actions.Commands as R
 
@@ -191,6 +192,7 @@ myLayout = avoidStruts
          $ boringWindows
          $ onWorkspace (myWorkspaces !! 4) (tabs  ||| tiled)
          $ onWorkspace (myWorkspaces !! 5) (tabs  ||| tiled)
+         $ onWorkspace (myWorkspaces !! 3) (noBorders Full ||| tiled ||| tabs)
          $                                  tiled ||| tabs
     where
       -- default tiling algorithm partitions the screen into two panes
