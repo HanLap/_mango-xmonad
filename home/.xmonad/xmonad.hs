@@ -51,7 +51,7 @@ import qualified XMonad.Actions.Commands as R
 matches :: [String] -> String -> Bool
 matches l s = any ((`isInfixOf` map toLower s) . map toLower) l
 
-myTerminal = "alacritty"
+myTerminal = "<#{TERMINAL}#>"
 
 myModMask = mod4Mask
 -- | Prefix matching version of `=?`
@@ -140,7 +140,7 @@ scratchpads =
          , hook  = customFloating (W.RationalRect 0.2 0.03 0.6 0.6)
          }
     , NS { name  = "terminal"
-         , cmd   = "alacritty --class scratch --title scratch"
+         , cmd   = "<#{TERMINAL}#> --class scratch --title scratch"
          , query = resource =?. "scratch"
          , hook  = customFloating (W.RationalRect 0.2 0.03 0.6 0.6)
          }
